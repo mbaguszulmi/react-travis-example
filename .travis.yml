@@ -27,8 +27,8 @@ after_success:
   - cd build
   - echo "[L] Initializing git..."
   - git init .
+  - git remote add origin-pages "https://${GITHUB_TOKEN}@github.com/${GITHUB_REPO}.git"
   - git checkout -b "gh-pages"
   - git add .
-  - git remote add origin-pages "https://${GITHUB_TOKEN}@github.com/${GITHUB_REPO}.git"
   - git commit -m "Deploy to github pages $TRAVIS_BUILD_NUMBER"
   - git push --force origin-pages master:${TARGET_BRANCH_DEPLOY}
