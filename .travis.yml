@@ -22,13 +22,11 @@ script:
   - echo "[L] Building project..."
   - yarn build
 after_success:
-  - echo "[L] Releasing to gh-pages branch..."
-  - echo "[L] Switching to gh-pages branch"
-  - git switch gh-pages
-  - echo "[L] Delete all files except build and node_modules"
-  - rm -vr !("build"|"node_modules")
-  - echo "[L] Move build content to this folder"
-  - mv ./build/* ./
+  - echo "[L] CD into build folder..."
+  - cd build
+  - echo "[L] Initializing git..."
+  - git init .
   - git add .
+  - git remote add origin-pages "https://${GITHUB_TOKEN}@github.com/${GITHUB_REPO}.git"
   - git commit -m "Deploy to github pages $TRAVIS_BUILD_NUMBER"
-  - git push --force "https://${GITHUB_TOKEN}@github.com/${GITHUB_REPO}.git" master:gh-pages
+  - git push --force origin-pages gh-pages
