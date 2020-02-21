@@ -31,5 +31,5 @@ after_success:
   - git checkout -b "gh-pages"
   - git add .
   - git commit -m "Deploy to github pages $TRAVIS_BUILD_NUMBER"
-  - echo "[L] Push to master:${TARGET_BRANCH_DEPLOY} branch"
-  - git push --force origin-pages master:${TARGET_BRANCH_DEPLOY}
+  - echo "[L] Push to ${TARGET_BRANCH_DEPLOY} branch"
+  - git push --force origin-pages ${TARGET_BRANCH_DEPLOY}
