@@ -19,7 +19,6 @@ install:
 script:
   - echo "[L] Start Test..."
   - yarn test
-before_deploy:
   - echo "[L] Building project..."
   - yarn build
 after_success:
@@ -31,5 +30,5 @@ after_success:
   - echo "[L] Move build content to this folder"
   - mv ./build/* ./
   - git add .
-  - git commit -m "Deploy to github pages $(date)"
+  - git commit -m "Deploy to github pages $TRAVIS_BUILD_NUMBER"
   - git push --force "https://${GITHUB_TOKEN}@github.com/${GITHUB_REPO}.git" master:gh-pages
