@@ -1,0 +1,35 @@
+os:
+  - linux
+env:
+  global:
+    - GITHUB_REPO: "mbaguszulmi/react-travis-example"
+branches:
+  only:
+  - master
+language: node_js
+node_js:
+  - "stable"
+cache:
+  yarn: true
+  directories:
+    - node_modules
+install:
+  - echo "[L] Installing dependencies..."
+  - yarn install
+script:
+  - echo "[L] Start Test..."
+  - yarn test
+before_deploy:
+  - echo "[L] Building project..."
+  - yarn build
+after_success:
+  - echo "[L] Releasing to gh-pages branch..."
+  - echo "[L] Switching to gh-pages branch"
+  - git switch gh-pages
+  - echo "[L] Delete all files except build and node_modules"
+  - rm -vr !("build"|"node_modules")
+  - echo "[L] Move build content to this folder"
+  - mv ./build/* ./
+  - git add .
+  - git commit -m "Deploy to github pages $(date)"
+  - git push --force "https://${GITHUB_TOKEN}@github.com/${GITHUB_REPO}.git" master:gh-pages
